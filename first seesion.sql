@@ -747,3 +747,841 @@ mysql> select * from emp;
 
 
 
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ###Q-15. Write an SQL query to fetch intersecting records of two tables.
+mysql>
+mysql>
+mysql>
+mysql> select * from worker w inner join worker_clone wc on worker_id.w=worker_id.wc
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql>
+mysql>
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| b119               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| school             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.02 sec)
+
+mysql> use b119;
+Database changed
+mysql> select * from worker w inner join worker_clone wc on worker_id.w=worker_id.wc;
+ERROR 1054 (42S22): Unknown column 'worker_id.w' in 'on clause'
+mysql> select * from worker w inner join worker_clone wc on w.worker_id=wc.worker_id;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              | WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> ##Q-16. Write an SQL query to show records from one table that another table does not have.
+mysql>
+mysql>
+mysql> select * from worker w left join worker_clone wc on w.worker_id=wc.worker_id where wc.worker_id is null;
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ###Q-17.  Write an SQL query to show the top n (say 10) records of a table.
+mysql>
+mysql>
+mysql>
+mysql> select * form worker limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form worker limit 10' at line 1
+mysql> select * from worker limit 10;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> ##Q-18. Write an SQL query to determine the nth (say n=5) highest salary from a table.
+mysql>
+mysql>
+mysql> select *, dence_rank() OVER (order by salary) AS rank
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OVER (order by salary) AS rank' at line 1
+mysql> select *, dence_rank() OVER (order by salary) AS ranked;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OVER (order by salary) AS ranked' at line 1
+mysql>
+mysql>
+mysql>
+mysql> select *, dense_rank() OVER (order by salary) AS ranked;
+ERROR 1096 (HY000): No tables used
+mysql> select *, dense_rank() OVER (order by salary) AS ranked from worker;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              | ranked |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+--------+
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |      1 |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |      2 |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |      3 |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |      4 |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |      5 |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |      6 |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |      7 |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |      7 |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> select * from ( select *, dense_rank() OVER (order by salary) AS ranked from worker) where ranked=5;
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> select * from ( select *, dense_rank() OVER (order by salary) AS ranked from worker)t where ranked=5;
++-----------+------------+-----------+--------+---------------------+------------+-----------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL           | ranked |
++-----------+------------+-----------+--------+---------------------+------------+-----------------+--------+
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com |      5 |
++-----------+------------+-----------+--------+---------------------+------------+-----------------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> select * from ( select *, dense_rank() OVER (order by salary desc) AS ranked from worker)t where ranked=5;
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             | ranked |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com |      5 |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ###Q-19. Write an SQL query to determine the 5th highest salary without using TOP or limit method.
+mysql>
+mysql> select * from ( select *, dense_rank() OVER (order by salary desc) AS ranked from worker)t where ranked=5;
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             | ranked |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com |      5 |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+1 row in set (0.01 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-20. Write an SQL query to fetch the list of employees with the same salary.
+mysql>
+mysql>
+mysql>
+mysql> select salary from worker group by salary having count(*)>1;
++--------+
+| salary |
++--------+
+| 500000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> select * from worker where salary in ( select salary from worker group by salary having count(*)>1);
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com   |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ##Q-1. Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>.
+mysql>
+mysql>
+mysql> select FIRST_NAME as WORKER_NAME  from worker;
++-------------+
+| WORKER_NAME |
++-------------+
+| Monika      |
+| Niharika    |
+| Vishal      |
+| Amitabh     |
+| Vivek       |
+| Vipul       |
+| Satish      |
+| Geetika     |
++-------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-2. Write an SQL query to fetch unique values of DEPARTMENT from Worker table.
+mysql>
+mysql>
+mysql> select distinct department from worker;
++------------+
+| department |
++------------+
+| HR         |
+| Admin      |
+| Account    |
++------------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> #Q-3. Write an SQL query to show the last 5 record from a table.
+mysql>
+mysql>
+mysql> select * from worker order by desc limit 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc limit 5' at line 1
+mysql> select * from worker order by worker_id desc limit 5;
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com  |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com   |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-1. Write an SQL query to print the first three characters of  FIRST_NAME from Worker table.
+mysql>
+mysql> select left(FIRST_NAME,3) as first_3_char from worker;
++--------------+
+| first_3_char |
++--------------+
+| Mon          |
+| Nih          |
+| Vis          |
+| Ami          |
+| Viv          |
+| Vip          |
+| Sat          |
+| Gee          |
++--------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> # Q-2. Write an SQL query to find the position of the alphabet (‘a’) in the first name column ‘Amitabh’ from Worker table.
+mysql>
+mysql>
+mysql>
+mysql> select locate('a',FIRST_NAME) as position from worker where FIRST_NAME='Amitabh';
++----------+
+| position |
++----------+
+|        1 |
++----------+
+1 row in set (0.01 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> #Q-3. Write an SQL query to print the name of employees having the highest salary in each department.
+mysql>
+mysql>
+mysql>
+mysql> select max(salary) from worker ;
++-------------+
+| max(salary) |
++-------------+
+|      500000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from worker w where salary=(select max(salary) from worker where department =w.department);
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com  |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com   |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com   |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-1. Write an SQL query to print the FIRST_NAME from Worker table after removing white spaces from the right side.
+mysql>
+mysql>
+mysql> select rtrim(FIRST_NAME) form worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'worker' at line 1
+mysql> select rtrim(FIRST_NAME) as FIRST_NAME form worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form worker' at line 1
+mysql> select RTRIM(FIRST_NAME) as FIRST_NAME form worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form worker' at line 1
+mysql> select RTRIM(FIRST_NAME) as FIRST_NAME from worker;
++------------+
+| FIRST_NAME |
++------------+
+| Monika     |
+| Niharika   |
+| Vishal     |
+| Amitabh    |
+| Vivek      |
+| Vipul      |
+| Satish     |
+| Geetika    |
++------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> #Q-2. Write an SQL query that fetches the unique values of DEPARTMENT from Worker table and prints its length.
+mysql>
+mysql>
+mysql> select distinct department , lenght(department) as lenght_department from worker;
+ERROR 1305 (42000): FUNCTION b119.lenght does not exist
+mysql> select distinct department , lenght(department) as length_department from worker;
+ERROR 1305 (42000): FUNCTION b119.lenght does not exist
+mysql> select distinct department , length(department) as length_department from worker;
++------------+-------------------+
+| department | length_department |
++------------+-------------------+
+| HR         |                 2 |
+| Admin      |                 5 |
+| Account    |                 7 |
++------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> #Q-3. Write an SQL query to fetch nth max salaries from a table.
+mysql>
+mysql>
+mysql> select max(salary) from worker;
++-------------+
+| max(salary) |
++-------------+
+|      500000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> select salary from (select salary , dense rank() over(order by salary desc) as ranked from worker ) where ranked=9;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rank() over(order by salary desc) as ranked from worker ) where ranked=9' at line 1
+mysql>
+mysql> select salary from (select salary , dense rank() over(order by salary desc) as ranked from worker )t where ranked=9;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rank() over(order by salary desc) as ranked from worker )t where ranked=9' at line 1
+mysql>
+mysql>
+mysql> select salary from (select salary , DENSE_rank() over(order by salary desc) as ranked from worker )t where ranked=9;
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-1. Write an SQL query to print the FIRST_NAME from Worker table after replacing ‘a’ with ‘A’
+mysql>
+mysql> select replace(FIRST_NAME,'a','A') as replace from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'replace from worker' at line 1
+mysql> select replace(FIRST_NAME,'a','A') as replaces from worker;
++----------+
+| replaces |
++----------+
+| MonikA   |
+| NihArikA |
+| VishAl   |
+| AmitAbh  |
+| Vivek    |
+| Vipul    |
+| SAtish   |
+| GeetikA  |
++----------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> #Q-2. Write an SQL query to print all Worker details from the Worker table order by FIRST_NAME Ascending and DEPARTMENT Descending.
+mysql>
+mysql> select * from worker order by FIRST_NAME asc , DEPARTMENT desc;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> #Q-3. Write an SQL query to fetch the names of workers who earn the highest salary.
+mysql>
+mysql>
+mysql> select FIRST_
+    -> NAME ,LAST_NAME ,SALARY where salary = (select max(salary) from worker);
+ERROR 1054 (42S22): Unknown column 'FIRST_' in 'field list'
+mysql> SELECT FIRST_NAME ,LAST_NAME ,SALARY where salary = (select max(salary) from worker);
+ERROR 1054 (42S22): Unknown column 'FIRST_NAME' in 'field list'
+mysql> ^C
+mysql>
+mysql>
+mysql> SELECT FIRST_NAME ,LAST_NAME ,SALARY from worker where salary = (select max(salary) from worker);
++------------+-----------+--------+
+| FIRST_NAME | LAST_NAME | SALARY |
++------------+-----------+--------+
+| Amitabh    | Singh     | 500000 |
+| Vivek      | Bhati     | 500000 |
++------------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> #Q-1. Write an SQL query to print details of workers excluding first names, “Vipul” and “Satish” from Worker table.
+mysql>
+mysql> select * from worker FIRST_TIME not in (“Vipul” , “Satish”)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not in (“Vipul” , “Satish”)' at line 1
+mysql> ^C
+mysql> select * from worker FIRST_NAME not in (“Vipul” , “Satish”)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'not in (“Vipul” , “Satish”)' at line 1
+mysql>
+mysql>
+mysql> select * from worker where FIRST_NAME not in (“Vipul” , “Satish”);
+ERROR 1054 (42S22): Unknown column '“Vipul”' in 'where clause'
+mysql>
+mysql>
+mysql> select * from worker where FIRST_NAME not in ('Vipul' , 'Satish');
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> #Q-2. Write an SQL query to print details of the Workers whose FIRST_NAME ends with ‘h’ and contains six alphabets.
+mysql>
+mysql>
+mysql> select * from worker where FIRST_NAME like '_____h';
++-----------+------------+-----------+--------+---------------------+------------+------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL            |
++-----------+------------+-----------+--------+---------------------+------------+------------------+
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com |
++-----------+------------+-----------+--------+---------------------+------------+------------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>  select * from worker where EMAIL REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$';
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> #Q-1. Write an SQL query to print details of the Workers who have joined in Feb’2014
+mysql>
+mysql>
+mysql> select * from worker where month(JOINING_DATE)=2 and year(JOINING_DATE)=2014;
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com  |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com  |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+3 rows in set (0.01 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> #Q-2. Write an SQL query to fetch duplicate records having matching data in some fields of a table.
+mysql>
+mysql>
+mysql> select  FIRST_NAME, LAST_NAME,SALARY,JOINING_DATE,DEPARTMENT,count(*) as total from worker group by FIRST_NAME, LAST_NAME,SALARY,JOINING_DATE,DEPARTMENT havingcount(*)>1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'havingcount(*)>1' at line 1
+mysql> select  FIRST_NAME, LAST_NAME,SALARY,JOINING_DATE,DEPARTMENT,count(*) as total from worker group by FIRST_NAME, LAST_NAME,SALARY,JOINING_DATE,DEPARTMENT having count(*)>1;
+Empty set (0.01 sec)
+
+mysql> ^C
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> #Q-3. How to remove duplicate rows from Employees table.
+mysql>
+mysql>
+mysql> select  FIRST_NAME, LAST_NAME,SALARY,JOINING_DATE,DEPARTMENT,count(*) as total from worker group by FIRST_NAME, LAST_NAME,SALARY,JOINING_DATE,DEPARTMENT having count(*)>1;
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-13. Write an SQL query to show only odd rows from a table.
+mysql>
+mysql>
+mysql> select worker_id from worker where worker_id % 2 = 1;
++-----------+
+| worker_id |
++-----------+
+|         1 |
+|         3 |
+|         5 |
+|         7 |
++-----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from worker where worker_id % 2 = 1;
++-----------+------------+-----------+--------+---------------------+------------+------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL            |
++-----------+------------+-----------+--------+---------------------+------------+------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com  |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com |
++-----------+------------+-----------+--------+---------------------+------------+------------------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-14. Write an SQL query to clone a new table from another table.
+mysql>
+mysql>
+mysql> create table worker_clone_2 from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from worker' at line 1
+mysql> ^C
+mysql> create table worker_clone_2 as select from worker;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from worker' at line 1
+mysql> create table worker_clone_2 as select * from worker;
+Query OK, 8 rows affected (0.09 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> \
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> select * from worker_clone;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker_clone_2;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+
+
+ysql> ###Q-15. Write an SQL query to fetch intersecting records of two tables.
+mysql>
+mysql>
+mysql>
+mysql> select * from worker w inner join worker_clone wc on worker_id.w=worker_id.wc
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql>
+mysql>
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| b119               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| school             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.02 sec)
+
+mysql> use b119;
+Database changed
+mysql> select * from worker w inner join worker_clone wc on worker_id.w=worker_id.wc;
+ERROR 1054 (42S22): Unknown column 'worker_id.w' in 'on clause'
+mysql> select * from worker w inner join worker_clone wc on w.worker_id=wc.worker_id;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              | WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> ##Q-16. Write an SQL query to show records from one table that another table does not have.
+mysql>
+mysql>
+mysql> select * from worker w left join worker_clone wc on w.worker_id=wc.worker_id where wc.worker_id is null;
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ###Q-17.  Write an SQL query to show the top n (say 10) records of a table.
+mysql>
+mysql>
+mysql>
+mysql> select * form worker limit 10;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'form worker limit 10' at line 1
+mysql> select * from worker limit 10;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> ##Q-18. Write an SQL query to determine the nth (say n=5) highest salary from a table.
+mysql>
+mysql>
+mysql> select *, dence_rank() OVER (order by salary) AS rank
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OVER (order by salary) AS rank' at line 1
+mysql> select *, dence_rank() OVER (order by salary) AS ranked;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OVER (order by salary) AS ranked' at line 1
+mysql>
+mysql>
+mysql>
+mysql> select *, dense_rank() OVER (order by salary) AS ranked;
+ERROR 1096 (HY000): No tables used
+mysql> select *, dense_rank() OVER (order by salary) AS ranked from worker;
++-----------+------------+-----------+--------+---------------------+------------+--------------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL              | ranked |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+--------+
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20 09:00:00 | Account    | satish@gmail.com   |      1 |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      | niharika@gmail.com |      2 |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com  |      3 |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20 09:00:00 | HR         | monika@gmail.com   |      4 |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com    |      5 |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20 09:00:00 | HR         | vishal@gmail.com   |      6 |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com  |      7 |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com    |      7 |
++-----------+------------+-----------+--------+---------------------+------------+--------------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> select * from ( select *, dense_rank() OVER (order by salary) AS ranked from worker) where ranked=5;
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> select * from ( select *, dense_rank() OVER (order by salary) AS ranked from worker)t where ranked=5;
++-----------+------------+-----------+--------+---------------------+------------+-----------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL           | ranked |
++-----------+------------+-----------+--------+---------------------+------------+-----------------+--------+
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    | vipul@gmail.com |      5 |
++-----------+------------+-----------+--------+---------------------+------------+-----------------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> select * from ( select *, dense_rank() OVER (order by salary desc) AS ranked from worker)t where ranked=5;
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             | ranked |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com |      5 |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ###Q-19. Write an SQL query to determine the 5th highest salary without using TOP or limit method.
+mysql>
+mysql> select * from ( select *, dense_rank() OVER (order by salary desc) AS ranked from worker)t where ranked=5;
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             | ranked |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      | geetika@gmail.com |      5 |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+--------+
+1 row in set (0.01 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> #Q-20. Write an SQL query to fetch the list of employees with the same salary.
+mysql>
+mysql>
+mysql>
+mysql> select salary from worker group by salary having count(*)>1;
++--------+
+| salary |
++--------+
+| 500000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> select * from worker where salary in ( select salary from worker group by salary having count(*)>1);
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT | EMAIL             |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      | amitabh@gmail.com |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      | vivek@gmail.com   |
++-----------+------------+-----------+--------+---------------------+------------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
